@@ -4,12 +4,15 @@ namespace App\Service;
 
 use App\Entity\Patient;
 use App\Repository\PatientRepository;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class PatientService implements PatientServiceInterface
 {
 
-    public function __construct(private PatientRepository $patientRepository, private ObjectManager $manager) {
+    public function __construct(
+        private PatientRepository $patientRepository, 
+        private EntityManagerInterface $manager
+        ) {
         
     }
     public function save(Patient $patient):Patient{
@@ -17,6 +20,7 @@ class PatientService implements PatientServiceInterface
         if(!$found){
             $this->manager->persist($patient);
             $this->manager->flush();
+            $found=$patient;
         }
         return $found;
     }

@@ -57,7 +57,7 @@ class PatientType extends AbstractType
                     ]),
                 ],
             ])
-            ->add("Medecin", ChoiceType::class,[
+            ->add("medecin", ChoiceType::class,[
                 "mapped"=>false,
                 "label"=>"Choisir un medecin",
                 "choices"=>$this->getMedecin(),

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Numero sur la liste{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="md-col-11">
+        
+        <h1 class="display-1">Bravo vous etes sur la liste 🎉 ! </h1>
+
+        <h3 class="display-2">Vous etes N°{{schedule.arrivalPosition}}</h3>
+        <strong class="danger">Veuillez patienter dans la salle d'attente, le docteur vous appellera!</strong>
+    </div>
+</div>
+{% endblock %}

@@ -3,13 +3,17 @@
 namespace App\DataFixtures;
 
 use App\Entity\Medecin;
+use App\Service\DoctorConfigurationServiceInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class MedecinFixtures extends Fixture
 {
-    public function __construct(private UserPasswordHasherInterface $userPasswordHasherInterface) {
+    public function __construct(
+        private UserPasswordHasherInterface $userPasswordHasherInterface,
+        private DoctorConfigurationServiceInterface $doctorConfigurationService
+        ) {
     }
     public function load(ObjectManager $manager): void
     {
@@ -28,6 +32,7 @@ class MedecinFixtures extends Fixture
             $medecin->setAdresse("136 RUE DES MURLINS 45000 ORLEANS");
             $medecin->setRoles($medecin->getRoles());
             $manager->persist($medecin);
+            $this->doctorConfigurationService->saveDoctorConfigurationByDefaut($medecin);
         }
         
 

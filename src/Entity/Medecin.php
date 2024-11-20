@@ -61,6 +61,9 @@ class Medecin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
+    #[ORM\OneToOne(mappedBy: 'medecin', cascade: ['persist', 'remove'])]
+    private ?DoctorConfiguration $doctorConfiguration = null;
+
     public function __construct()
     {
         $this->visitorLists = new ArrayCollection();
@@ -240,6 +243,23 @@ class Medecin implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getDoctorConfiguration(): ?DoctorConfiguration
+    {
+        return $this->doctorConfiguration;
+    }
+
+    public function setDoctorConfiguration(DoctorConfiguration $doctorConfiguration): static
+    {
+        // set the owning side of the relation if necessary
+        if ($doctorConfiguration->getMedecin() !== $this) {
+            $doctorConfiguration->setMedecin($this);
+        }
+
+        $this->doctorConfiguration = $doctorConfiguration;
 
         return $this;
     }
