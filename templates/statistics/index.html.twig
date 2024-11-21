@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Incription sur la liste de visite{% endblock %}
+
+{% block body %}
+
+{% include("menu/header.html.twig") %}
+<div class="example-wrapper text-center mt-3">
+    
+ <h1 class="display-5">Vos Stats!</h1>
+    <div class="w-50 m-auto" id="stats" data-user="{{user.id}}"></div>
+  
+</div>
+{% endblock %}

@@ -6,6 +6,7 @@ use App\Repository\PatientRepository;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PatientRepository::class)]
 class Patient
@@ -13,15 +14,22 @@ class Patient
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["patient:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["patient:read"])]
+
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["patient:read"])]
+
     private ?string $prenom = null;
 
     #[ORM\Column(length: 15)]
+    #[Groups(["patient:read"])]
+
     private ?string $socialSecurityNumber = null;
 
     #[ORM\Column]

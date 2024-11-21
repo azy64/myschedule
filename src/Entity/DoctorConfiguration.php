@@ -30,6 +30,9 @@ class DoctorConfiguration
     #[ORM\JoinColumn(nullable: false)]
     private ?Medecin $medecin = null;
 
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $timeToEnd = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +94,18 @@ class DoctorConfiguration
     public function setMedecin(Medecin $medecin): static
     {
         $this->medecin = $medecin;
+
+        return $this;
+    }
+
+    public function getTimeToEnd(): ?\DateTimeInterface
+    {
+        return $this->timeToEnd;
+    }
+
+    public function setTimeToEnd(\DateTimeInterface $timeToEnd): static
+    {
+        $this->timeToEnd = $timeToEnd;
 
         return $this;
     }

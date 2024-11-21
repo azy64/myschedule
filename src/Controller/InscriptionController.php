@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Medecin;
 use App\Entity\Patient;
 use App\Entity\VisitorList;
 use App\Form\PatientType;
 use App\Repository\VisitorListRepository;
 use App\Security\Voter\MedecinVoter;
+use App\Service\DoctorConfigurationServiceInterface;
 use App\Service\MedecinServiceInterface;
 use App\Service\PatientServiceInterface;
+use App\Service\utilities\DoctorConfigurationServiceUtility;
 use App\Service\VisitorListServiceInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,7 +34,9 @@ class InscriptionController extends AbstractController
         VisitorListServiceInterface $visitorListServiceInterface,
         SessionInterface $session,
         Request $request,
-        EntityManagerInterface $entityManagerInterface
+        EntityManagerInterface $entityManagerInterface,
+        DoctorConfigurationServiceUtility $doctorUtility,
+        DoctorConfigurationServiceInterface $doctorConfigurationService
         ): Response
     {
         $patient =new Patient();
@@ -41,8 +46,17 @@ class InscriptionController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $medecin_id= $form->get('medecin')->getData();
             $medecin = $medecinService->getMedecin($medecin_id);
+            if($doctorUtility->checkLimitPatientNumberReached($medecin)===false)
+               return $this->redirectToRoute("app_limit_number", ['id'=> $medecin->getId()]);
+            $doctorUtility->reinitializeCurrentPatientNumber($medecin);
             $patient = $patientServiceInterface->save($patient);
             $one=$visitorListServiceInterface->save(["medecin"=>$medecin,"patient"=>$patient,"arrivalDate"=>new \DateTime()]);
+            $medecin->getDoctorConfiguration()->setCurrentPatientNumber(
+                $medecin->getDoctorConfiguration()->getCurrentPatientNumber()+1);
+            $doctorConfigurationService->updateDoctorConfiguration(
+                $medecin->getDoctorConfiguration()->getId(),
+                $medecin->getDoctorConfiguration()
+            );
             $session->set("visitorList",serialize($one));
             return $this->redirectToRoute("app_resultat");
         }
@@ -93,5 +107,24 @@ class InscriptionController extends AbstractController
         $em->persist($visitorList);
         $em->flush();
         return $this->json(["status"=> "success"]);
+
+    }
+    #[Route("/limit-patient-number/{id}", name:"app_limit_number")]
+    public function limitPatientNumber(Medecin $medecin):Response{
+
+        return $this->render("inscription/limit.html.twig",["medecin"=>$medecin]);
+    }
+    #[Route("/stats", name:"app_stats")]
+    #[IsGranted("ROLE_USER")]
+    public function statistique():Response{
+
+        return $this->render("statistics/index.html.twig",["user"=> $this->getUser()]);
+    }
+    #[Route("/stats-medecin/{id}", name:"app_stats_medecin")]
+    public function statisticData(Medecin $medecin):JsonResponse{
+
+        return $this->json($medecin->getVisitorLists(),200,[],[
+            "groups"=>["patient:read","visitorList:read"]
+        ]);
     }
 }

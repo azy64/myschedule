@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Medecin;
 use App\Entity\VisitorList;
 use App\Repository\VisitorListRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -44,4 +45,7 @@ class VisitorListService implements VisitorListServiceInterface
         return $visitors;
     }
 
+    public function getAllVisitorListByMedecin(Medecin $medecin): array|null{
+        return $this->visitorListRepository->findBy(["medecin"=>$medecin]);
+    }
 }

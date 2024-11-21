@@ -18,11 +18,14 @@ class DoctorConfigurationService implements DoctorConfigurationServiceInterface
     }
     public function saveDoctorConfigurationByDefaut(Medecin $medecin): DoctorConfiguration{
         $time= new \DateTime();
+        $end= new \DateTime();
+        $end->setTime(12,0,0);
         $time->setTime(7,0,0);
         $conf = new DoctorConfiguration();
         $conf->setMedecin($medecin)
         ->setTimeToStart($time)->setCurrentPatientNumber(0)
-        ->setLimitPatientNumber(40)->setLastConsultation(new \DateTime());
+        ->setLimitPatientNumber(40)->setLastConsultation(new \DateTime())
+        ->setTimeToEnd($end);
         $this->em->persist($conf);
         $this->em->flush();
         return $conf;
@@ -35,7 +38,8 @@ class DoctorConfigurationService implements DoctorConfigurationServiceInterface
         $doctorConfig=$this->doctorConfigurationRepository->find($id);
         $doctorConfig->setCurrentPatientNumber($doctorConfiguration->getCurrentPatientNumber());
         $doctorConfig->setLimitPatientNumber($doctorConfiguration->getLimitPatientNumber());
-        $doctorConfig->setTimeToStart($doctorConfiguration->getTimeToStart());
+        $doctorConfig->setTimeToStart($doctorConfiguration->getTimeToStart())
+        ->setTimeToEnd($doctorConfiguration->getTimeToEnd());
         $doctorConfig->setLastConsultation($doctorConfiguration->getLastConsultation());
         $doctorConfig->setMedecin($doctorConfiguration->getMedecin());
         $this->em->persist($doctorConfig);
