@@ -14,6 +14,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
@@ -23,10 +25,21 @@ class RegistrationFormType extends AbstractType
         ->add('prenom',TextType::class,[
             'label'=> 'Votre prenom',
             "attr"=>["class"=>"form-control"],
+            'constraints'=>[
+                new NotBlank([
+                    'message' => 'Please enter a password',
+                ]),
+            ]
         ])
         ->add('nom',TextType::class,[
             'label'=> 'Votre nom',
             "attr"=>["class"=>"form-control"],
+            'constraints'=>[
+                new NotBlank([
+                    'message' => 'Please enter a password',
+                ]),
+                new Regex("",)
+            ]
         ])
         ->add('specialisation',ChoiceType::class,[
             'choices'=>[
@@ -40,12 +53,28 @@ class RegistrationFormType extends AbstractType
         ->add('adresse',TextType::class,[
             'label'=> 'Votre Adresse',
             "attr"=>["class"=>"form-control"],
+            "constraints"=>[
+                new NotBlank([
+                    'message' => 'Saisissez un mot de passe',
+                ]),
+                new NotNull([
+                    "message"=>"L'adresse n'est doit pas etre null"
+                ]),
+                new Length([
+                    "min"=>6,
+                ])
+            ]
         ])
             ->add('email',EmailType::class,[
                 'label'=> 'Votre Email',
                 "attr"=>["class"=>"form-control"],
+                "constraints"=>[
+                    new NotBlank([
+                        'message' => 'Entrez votre email',
+                    ]),
+                ]
             ])
-            ->add('agreeTerms', CheckboxType::class, [
+        ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([

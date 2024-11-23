@@ -4,13 +4,20 @@
 
 {% block body %}
 
-<div class="row">
-    <div class="md-col-11">
+<div class="row-fluid">
+    <div class="col-md-9 text-center m-auto">
         
-        <h1 class="display-1">Bravo vous etes sur la liste 🎉 ! </h1>
+        <h1 class="display-2 m-2">Bravo vous êtes sur la liste 🎉 ! </h1>
 
-        <h3 class="display-2">Vous etes N°{{schedule.arrivalPosition}}</h3>
-        <strong class="danger">Veuillez patienter dans la salle d'attente, le docteur vous appellera!</strong>
+        <h3 class="display-5 m-5 ">Vous êtes <strong class="text-warning rounded-circle p-4 bg-success ">N°{{schedule.arrivalPosition}}</strong></h3>
+        <strong class="text-danger mark small">
+        <i>Veuillez patienter dans la salle d'attente, le docteur vous appellera!</i>
+        </strong>
+        <hr>
+        <div>
+            <img src="{{asset('images/tunaweza-logo.png')}}" alt="logo" title="Tunaweza logo" width="150"/>
+        </div>
+        
     </div>
 </div>
 {% endblock %}

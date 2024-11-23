@@ -36,11 +36,21 @@ class PatientType extends AbstractType
         $builder
             ->add('nom', TextType::class,[
                 "label"=>"Votre Nom",
-                "attr"=>["class"=>"form-control m-2"]
+                "attr"=>["class"=>"form-control m-2"],
+                "constraints"=>[
+                    new NotBlank([
+                        'message' => 'Veuillez saisir votre nom',
+                    ]),
+                ]
             ])
             ->add('prenom',TextType::class,[
                 "label"=> "Votre prenom",
-                "attr"=>["class"=>"form-control m-2"]
+                "attr"=>["class"=>"form-control m-2"],
+                "constraints"=>[
+                    new NotBlank([
+                        'message' => 'Veuillez saisir votre prenom',
+                    ]),
+                ]
             ])
             ->add("socialSecurityNumber",TextType::class,[
                 "label"=>"Votre numero de sécurité sociale",
