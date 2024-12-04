@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DoctorConfiguration index{% endblock %}
+
+{% block body %}
+    <h1>DoctorConfiguration index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>LimitPatientNumber</th>
+                <th>TimeToStart</th>
+                <th>CurrentPatientNumber</th>
+                <th>LastConsultation</th>
+                <th>TimeToEnd</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for doctor_configuration in doctor_configurations %}
+            <tr>
+                <td>{{ doctor_configuration.id }}</td>
+                <td>{{ doctor_configuration.limitPatientNumber }}</td>
+                <td>{{ doctor_configuration.timeToStart ? doctor_configuration.timeToStart|date('H:i:s') : '' }}</td>
+                <td>{{ doctor_configuration.currentPatientNumber }}</td>
+                <td>{{ doctor_configuration.lastConsultation ? doctor_configuration.lastConsultation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ doctor_configuration.timeToEnd ? doctor_configuration.timeToEnd|date('H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_doctor_configuration_show', {'id': doctor_configuration.id}) }}">show</a>
+                    <a href="{{ path('app_doctor_configuration_edit', {'id': doctor_configuration.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_doctor_configuration_new') }}">Create new</a>
+{% endblock %}

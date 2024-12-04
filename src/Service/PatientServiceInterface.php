@@ -12,5 +12,6 @@ interface PatientServiceInterface
     public function getAllPatient():array;
     public function getPatient(int $id):Patient|null;
     public function getPatientBySocialsecurityNumber(string $securityNumber):Patient|null;
+    public function getPatientByEmail(string $email):Patient|null;
 
 }

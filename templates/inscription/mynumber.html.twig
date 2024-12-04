@@ -7,16 +7,17 @@
 <div class="row-fluid">
     <div class="col-md-9 text-center m-auto">
         
-        <h1 class="display-2 m-2">Bravo vous êtes sur la liste 🎉 ! </h1>
+        <h1 class="display-3 m-2 mt-5 tunaweza-text-blue">Bravo vous êtes sur la liste 🎉 ! </h1>
 
-        <h3 class="display-5 m-5 ">Vous êtes <strong class="text-warning rounded-circle p-4 bg-success ">N°{{schedule.arrivalPosition}}</strong></h3>
-        <strong class="text-danger mark small">
+        <h3 class="display-5 m-5 tunaweza-text-blue">Vous êtes <strong class="text-white rounded-circle p-4 tunaweza-bg-red ">N°{{schedule.arrivalPosition}}</strong></h3>
+        <strong class="tunaweza-text-red mark small">
         <i>Veuillez patienter dans la salle d'attente, le docteur vous appellera!</i>
         </strong>
-        <hr>
-        <div>
-            <img src="{{asset('images/tunaweza-logo.png')}}" alt="logo" title="Tunaweza logo" width="150"/>
-        </div>
+        <!--<hr>
+        <div>-->
+            <!--<img src="{{asset('images/tunaweza-logo.png')}}" alt="logo" title="Tunaweza logo" width="150"/>-->
+            {% include("footer/_mini-footer.html.twig") %}
+       <!-- </div>-->
         
     </div>
 </div>

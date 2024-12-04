@@ -27,6 +27,9 @@ class PatientService implements PatientServiceInterface
     public function getPatientBySocialsecurityNumber(string $securityNumber): Patient|null{
         return $this->patientRepository->findOneBy(["socialSecurityNumber"=>$securityNumber]);
     }
+    public function getPatientByEmail(string $email): Patient|null{
+        return $this->patientRepository->findOneBy(["email"=>$email]);
+    }
 
     public function delete(int $id): Patient{
         $patient = $this->patientRepository->find($id);
@@ -39,6 +42,7 @@ class PatientService implements PatientServiceInterface
         $patient1->setSocialsecurityNumber($patient->getSocialSecurityNumber());
         $patient1->setNom($patient->getNom());
         $patient1->setPrenom($patient->getPrenom());
+        $patient1->setEmail($patient->getEmail());
         $this->manager->persist($patient1);
         $this->manager->flush();
         return $patient1;

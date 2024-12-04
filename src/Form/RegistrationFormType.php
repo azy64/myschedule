@@ -23,8 +23,13 @@ class RegistrationFormType extends AbstractType
     {
         $builder
         ->add('prenom',TextType::class,[
-            'label'=> 'Votre prenom',
+            'label'=> 'Prenom',
             "attr"=>["class"=>"form-control"],
+            "label_attr"=>["class"=>"ms-2 tunaweza-text-blue"],
+            "row_attr"=>[
+                "class"=>"text-secondary small",
+                "style"=>""
+            ],
             'constraints'=>[
                 new NotBlank([
                     'message' => 'Please enter a password',
@@ -32,8 +37,12 @@ class RegistrationFormType extends AbstractType
             ]
         ])
         ->add('nom',TextType::class,[
-            'label'=> 'Votre nom',
+            'label'=> 'Nom',
             "attr"=>["class"=>"form-control"],
+            "label_attr"=>["class"=>"ms-2 tunaweza-text-blue"],
+            "row_attr"=>[
+                "class"=>"text-secondary small",
+            ],
             'constraints'=>[
                 new NotBlank([
                     'message' => 'Please enter a password',
@@ -43,16 +52,24 @@ class RegistrationFormType extends AbstractType
         ])
         ->add('specialisation',ChoiceType::class,[
             'choices'=>[
-                "Medecin generaliste"=>"Medecin generaliste",
-                "Pediatre"=>"Pediatre",
+                "Medecin généraliste"=>"Medecin généraliste",
+                "Pédiatre"=>"Pédiatre",
                 "Dentiste"=>"Dentiste",
             ],
-            "label"=>"Votre specialisation",
-            "attr"=>["class"=>"form-control"]
+            "label_attr"=>["class"=>"ms-2 tunaweza-text-blue"],
+            "label"=>"Specialisation",
+            "attr"=>["class"=>"form-control"],
+            "row_attr"=>[
+                "class"=>"text-secondary small",
+            ],
         ])
         ->add('adresse',TextType::class,[
-            'label'=> 'Votre Adresse',
+            'label'=> 'Adresse Postale',
             "attr"=>["class"=>"form-control"],
+            "label_attr"=>["class"=>"ms-2 tunaweza-text-blue"],
+            "row_attr"=>[
+                "class"=>"text-secondary small",
+            ],
             "constraints"=>[
                 new NotBlank([
                     'message' => 'Saisissez un mot de passe',
@@ -66,8 +83,12 @@ class RegistrationFormType extends AbstractType
             ]
         ])
             ->add('email',EmailType::class,[
-                'label'=> 'Votre Email',
+                'label'=> 'Email',
                 "attr"=>["class"=>"form-control"],
+                "row_attr"=>[
+                "class"=>"text-secondary small",
+            ],
+                "label_attr"=>["class"=>"ms-2 tunaweza-text-blue"],
                 "constraints"=>[
                     new NotBlank([
                         'message' => 'Entrez votre email',
@@ -75,7 +96,13 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
         ->add('agreeTerms', CheckboxType::class, [
+                "label"=>"Accepter les conditions",
                 'mapped' => false,
+                "attr"=>["class"=>""],
+                "row_attr"=>[
+                "class"=>"text-secondary small",
+            ],
+                "label_attr"=>["class"=>"ms-2 tunaweza-text-blue"],
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
@@ -85,8 +112,13 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                "label"=>"Mot de passe",
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password',"class"=>"form-control"],
+                "row_attr"=>[
+                "class"=>"text-secondary small",
+            ],
+            "label_attr"=>["class"=>"ms-2 tunaweza-text-blue"],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',

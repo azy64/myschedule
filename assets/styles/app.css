@@ -5,7 +5,98 @@ body {
    /* background-color: skyblue;*/
    padding:0;
 }
+--color-blue{
+    background-color: #043B4D;
+}
 
 #logo{
     position: relative;
+}
+
+.tunaweza-text-red{
+    color:#EB1244;
+}
+.tunaweza-bg-red{
+    background-color: #EB1244;
+}
+
+.tunaweza-bg-gray {
+    background-color: #F4F8F7;
+}
+
+.border-red{
+    border:solid 1px #EB1244 ;
+}
+
+.tunaweza-h-100{
+    min-height: 100vh !important;
+}
+
+.hand-over:hover{
+    background-color: white;
+    color: #EB1244 !important;
+}
+
+.hand-over1:hover{
+    background-color: white;
+    color: #EB1244 !important;
+    border: 1px solid #EB1244;
+}
+/****blue rgb(4,59,77)****/
+.tunaweza-text-blue{
+    color:#043B4D !important;
+}
+.tunaweza-bg-blue{
+    background-color: #043B4D !important;
+}
+
+.border-blue{
+    border:solid 1px #043B4D ;
+}
+
+.hand-over-blue:hover{
+    background-color: white;
+    color: #043B4D !important;
+}
+
+.hand-over1-blue:hover{
+    background-color: white;
+    color: #043B4D !important;
+    border: 1px solid #043B4D;
+}
+
+.text-over:hover{
+   /* background-color: #EB1244;*/
+    color: #EB1244;
+}
+
+footer{
+    min-height: 80px;
+    position: absolute;
+    bottom: 0px;
+    width: 82%;
+}
+.tunaweza-rounded{
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius: 20px !important;
+    border-radius: 20px !important;
+}
+.tunaweza-table{
+    border-radius: 10px;
+}
+.tunaweza-table thead th{
+    background-color: var(--color-blue);
+    color: white;
+}
+
+.lift {
+    overflow-y: hidden;
+    transition-duration: 2s;
+    transition-property: all;
+    transition-timing-function: ease-in-out;
+    transition-behavior: calc(12);
+}
+
+.lift:hover{
+    overflow-y: scroll;
 }

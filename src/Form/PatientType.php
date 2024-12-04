@@ -8,6 +8,7 @@ use App\Repository\MedecinRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,8 +36,10 @@ class PatientType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class,[
-                "label"=>"Votre Nom",
+                "label"=>"Nom",
                 "attr"=>["class"=>"form-control m-2"],
+                "label_attr"=>["class"=>"ms-3"],
+                "row_attr"=>["class"=>"small"],
                 "constraints"=>[
                     new NotBlank([
                         'message' => 'Veuillez saisir votre nom',
@@ -44,17 +47,32 @@ class PatientType extends AbstractType
                 ]
             ])
             ->add('prenom',TextType::class,[
-                "label"=> "Votre prenom",
+                "label"=> "Prenom",
+                "label_attr"=>["class"=>"ms-3"],
                 "attr"=>["class"=>"form-control m-2"],
+                "row_attr"=>["class"=>"small"],
                 "constraints"=>[
                     new NotBlank([
                         'message' => 'Veuillez saisir votre prenom',
                     ]),
                 ]
             ])
-            ->add("socialSecurityNumber",TextType::class,[
-                "label"=>"Votre numero de sécurité sociale",
+            ->add('email', EmailType::class,[
+                "label"=>"Email",
                 "attr"=>["class"=>"form-control m-2"],
+                "label_attr"=>["class"=>"ms-3"],
+                "row_attr"=>["class"=>"small"],
+                "constraints"=>[
+                    new NotBlank([
+                        'message' => 'Veuillez saisir votre adresse email',
+                    ]),
+                ]
+            ])
+            ->add("socialSecurityNumber",TextType::class,[
+                "label"=>"Numero de sécurité sociale",
+                "label_attr"=>["class"=>"ms-3"],
+                "attr"=>["class"=>"form-control m-2"],
+                "row_attr"=>["class"=>"small"],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez saisir votre numero de securité sociale',
@@ -70,8 +88,10 @@ class PatientType extends AbstractType
             ->add("medecin", ChoiceType::class,[
                 "mapped"=>false,
                 "label"=>"Choisir un medecin",
+                "label_attr"=>["class"=>"ms-3"],
                 "choices"=>$this->getMedecin(),
-                "attr"=>["class"=>"form-control m-2"]
+                "attr"=>["class"=>"form-control m-2"],
+                "row_attr"=>["class"=>"small text-start tunaweza-text-blue"],
             ])
            /* ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

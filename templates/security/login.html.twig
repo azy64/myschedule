@@ -3,45 +3,70 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<div class="col-md-5 m-auto">
-    <form method="post">
-    <h1 class="font-weight-normal text-center">
-        <img src="{{asset('images/tunaweza-logo.png')}}" width="250" alt="logo" title="tunaweza-logo"/>
-    </h1>
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+<div class="container-fluid tunaweza-h-100">
+<div class="row tunaweza-h-100 ">
+    <div id="first" class="shadow col-md-5 tunaweza-bg-red text-white">
+        <div class="col-md-11 mt-5 pt-5">
+            <h1 class="text-center display-6 mb-5">Bienvenu sur Tunaweza MySchedule</h1>
+            <p class="text-center fst-italic">
+                Pour une meilleur gestion des vos patiens, nous sommes à vos cotés!<br>
+                connecté vous avec votre identifiant ou
+                <div class="mt-5 text-center">
+                <a href="{{path('app_register')}}" 
+                class="border-white btn btn-lg rounded tunaweza-red text-white hand-over m-1 p-3">
+                    Enregistrez-vous
+                 </a>
+                 </div>
+            </p>
+        </div>
+    </div>
+    <div id="second" class="col-md-7">
+        <div class="col-md-6 m-auto">
+            <form method="post">
+            <h1 class="font-weight-normal text-center">
+                <a href="{{path('app_login')}}">
+                    <img src="{{asset('images/tunaweza-logo.png')}}" width="150" alt="logo" title="tunaweza-logo"/>
+                </a>
+            </h1>
+            <h4 class="tunaweza-text-red display-6 text-center">Connectez-vous sur MySchedule</h4>
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-        {% endif %}
-        
-       <!-- <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>-->
-        <label for="username" class="p-1">Votre email</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-        <label for="password" class="p-1">Votre mot de passe</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+                
+            <!-- <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>-->
+                <label for="username" class="p-1 text-secondary mb-2">Votre Email</label>
+                <input type="email" value="{{ last_username }}" name="_username" id="username" class="shadow bg-body-tertiary rounded form-control" autocomplete="email" required autofocus>
+                <label for="password" class="p-1 text-secondary mt-3">Votre Mot de passe</label>
+                <input type="password" name="_password" id="password" class="rounded shadow bg-body-tertiary form-control" autocomplete="current-password" required>
 
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
+                <input type="hidden" name="_csrf_token"
+                    value="{{ csrf_token('authenticate') }}"
+                >
 
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
+                {#
+                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                    See https://symfony.com/doc/current/security/remember_me.html
 
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Remember me</label>
-            </div>
-        #}
-
-        <button class="btn btn-sm m-2 btn-primary" type="submit">
-           Connexion
-        </button>
-    </form>
-    <a href="{{path('app_register')}}" class="badge badge-danger text-dark">creer un compte!</a>
+                    <div class="checkbox mb-3">
+                        <input type="checkbox" name="_remember_me" id="_remember_me">
+                        <label for="_remember_me">Remember me</label>
+                    </div>
+                #}
+                <div class="text-center mt-4 mb-4">
+                <button class="shadow btn btn-lg tunaweza-bg-red text-white p-3 hand-over1 rounded" type="submit">
+                    Connexion
+                </button>
+                </div>
+            </form>
+           <!-- <a href="{{path('app_register')}}" class="badge badge-danger text-dark">creer un compte!</a>-->
+        </div>
+    </div>
+</div>
 </div>
 {% endblock %}

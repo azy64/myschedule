@@ -6,26 +6,45 @@
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-<div class="row">
-    <div class="md-col m-auto" style="width:50%;">
-    <h1>Register</h1>
+<div class="tunaweza-bg-red container-fluid p-5 pt-3 pb-0 tunaweza-h-100">
+    <div class="row bg-white rounded">
+        <div class="col-md-6">
+            <div class="col-md-11 m-auto border-end mt-5">
+                <div class="text-center">
+                    <img src="{{asset('images/tunaweza-logo.png')}}" alt="logo" width="320" title="tunaweza-logo"/>
+                </div>
+                <div class="text-center">
+                    <a class="btn btn-lg text-white mt-2 tunaweza-bg-red hand-over1 shadow p-2"
+                    href="{{path('app_login')}}" class="badge badge-danger text-dark">
+                    Connecte-toi !
+                </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-8 m-auto">
+            <h1 class="display-6 m-3 mt-4 tunaweza-text-red text-center">Rejoins nous!</h1>
 
-    {{ form_errors(registrationForm) }}
+            {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.specialisation) }}
-        {{ form_row(registrationForm.adresse) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn btn-danger">Register</button>
-    {{ form_end(registrationForm) }}
-    <a href="{{path('app_login')}}" class="badge badge-danger text-dark">se connecter!</a>
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.prenom) }}
+                {{ form_row(registrationForm.nom) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    
+                }) }}
+                {{ form_row(registrationForm.specialisation) }}
+                {{ form_row(registrationForm.adresse) }}
+                {{ form_row(registrationForm.agreeTerms) }}<a href="#">Lire les conditions d'utilisation</a>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-lg text-white mt-2 mb-3 tunaweza-bg-red hand-over1 shadow">
+                    Créer un compte
+                    </button>
+                </div>
+            {{ form_end(registrationForm) }}
+        </div>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Medecin;
 use App\Entity\VisitorList;
 use App\Repository\VisitorListRepository;
+use Doctrine\DBAL\SQL\Parser\Visitor;
 use Doctrine\ORM\EntityManagerInterface;
 
 class VisitorListService implements VisitorListServiceInterface
@@ -16,9 +17,9 @@ class VisitorListService implements VisitorListServiceInterface
     }
     public function save(array $data): VisitorList   {
         $visitorList = new VisitorList();
-        $arrivalPosition = count($this->getVisitorListOfToday())+1;
         $visitorList->setMedecin($data["medecin"]);
         $visitorList->setPatient ($data["patient"]);
+        $arrivalPosition = count($this->getVisitorListOfToday($visitorList))+1;       
         $visitorList->setArrivalDate($data["arrivalDate"]);
         $visitorList->setExamined(false);
         $visitorList->setArrivalPosition($arrivalPosition);
@@ -27,10 +28,10 @@ class VisitorListService implements VisitorListServiceInterface
         return $visitorList;
     }
 
-    public function getVisitorListOfToday(): array{
+    public function getVisitorListOfToday(VisitorList $visitorList): array{
         $today = new \DateTime();
         $visitors =[];
-        $visitorLists = $this->visitorListRepository->findAll();
+        $visitorLists = $this->visitorListRepository->findBy(["medecin"=>$visitorList->getMedecin()]);
         if($visitorLists!==null){
             foreach($visitorLists as $visitorList){
                 if(

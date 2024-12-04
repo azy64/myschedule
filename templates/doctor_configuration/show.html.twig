@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DoctorConfiguration{% endblock %}
+
+{% block body %}
+    <h1>DoctorConfiguration</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ doctor_configuration.id }}</td>
+            </tr>
+            <tr>
+                <th>LimitPatientNumber</th>
+                <td>{{ doctor_configuration.limitPatientNumber }}</td>
+            </tr>
+            <tr>
+                <th>TimeToStart</th>
+                <td>{{ doctor_configuration.timeToStart ? doctor_configuration.timeToStart|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CurrentPatientNumber</th>
+                <td>{{ doctor_configuration.currentPatientNumber }}</td>
+            </tr>
+            <tr>
+                <th>LastConsultation</th>
+                <td>{{ doctor_configuration.lastConsultation ? doctor_configuration.lastConsultation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>TimeToEnd</th>
+                <td>{{ doctor_configuration.timeToEnd ? doctor_configuration.timeToEnd|date('H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_doctor_configuration_index') }}">back to list</a>
+
+    <a href="{{ path('app_doctor_configuration_edit', {'id': doctor_configuration.id}) }}">edit</a>
+
+    {{ include('doctor_configuration/_delete_form.html.twig') }}
+{% endblock %}

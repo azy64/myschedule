@@ -1,6 +1,7 @@
 import 'bootstrap';
 import './bootstrap.js';
 import "https://cdn.jsdelivr.net/npm/ag-charts-community@9.0.0/dist/umd/ag-charts-community.js";
+//import "https://kit.fontawesome.com/4008f9efc5.js";
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -110,10 +111,16 @@ if(url.includes("/list-patient")){
     const btns = document.querySelectorAll("button[id^=visitor]");
     btns.forEach((btn)=>{
         btn.addEventListener('click',(e)=>{
-            const visitorId =e.target.id.split("-")[1];
+          //console.log('btn::',  e.target);
+          let tagName = e.target.tagName;
+          const pointer = tagName==="I"?e.target.parentElement:e.target;
+          if(btn.title.includes("not yet")){
+            const visitorId =pointer.id.split("-")[1];
             putExaminedOnTrue({id:visitorId},btn);
-            console.log("click",visitorId);
-        })
+          }
+          else console.log("le bouton est vert");
+            
+        },false)
     })
 }
 const putExaminedOnTrue =(data,btn)=>{
@@ -130,9 +137,11 @@ const putExaminedOnTrue =(data,btn)=>{
     .then((result)=>{
         console.log("resultat:",result);
         if(result.status==="success"){
+            btn.title="Yes";
             btn.classList.remove("btn-warning");
+            btn.classList.add("rounded");
             btn.classList.add("btn-success");
-            btn.innerHTML="YES";
+            btn.innerHTML='<i class="bi bi-hand-thumbs-up"></i>';
         }
         
     })

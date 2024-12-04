@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DoctorConfiguration{% endblock %}
+
+{% block body %}
+{% include("menu/header.html.twig") %}
+        <div class="col-md-10 m-auto tunaweza-text-blue lift p-3" style="height:510px;">
+            <h1 class="display-6 mb-3 mt-5">Mes Reglages<i class="bi bi-gear-fill"></i></h1>
+            <hr>
+
+            {{ include('doctor_configuration/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+           <!-- <a href="{{ path('app_doctor_configuration_index') }}">back to list</a>-->
+
+           <!-- {{ include('doctor_configuration/_delete_form.html.twig') }}-->
+        </div>
+        {% include('footer/footer.html.twig') %}
+    </div> 
+  </div>
+</div>
+{% endblock %}

@@ -10,6 +10,6 @@ interface VisitorListServiceInterface
 
     public function save(array $data):VisitorList;
 
-    public function getVisitorListOfToday(): array;
+    public function getVisitorListOfToday(VisitorList $visitor): array;
     public function getAllVisitorListByMedecin(Medecin $medecin): array|null;
 }

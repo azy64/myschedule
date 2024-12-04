@@ -46,8 +46,10 @@ class InscriptionController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $medecin_id= $form->get('medecin')->getData();
             $medecin = $medecinService->getMedecin($medecin_id);
+            // we are checking if the limit is reached----------
             if($doctorUtility->checkLimitPatientNumberReached($medecin)===false)
                return $this->redirectToRoute("app_limit_number", ['id'=> $medecin->getId()]);
+            
             $doctorUtility->reinitializeCurrentPatientNumber($medecin);
             $patient = $patientServiceInterface->save($patient);
             $one=$visitorListServiceInterface->save(["medecin"=>$medecin,"patient"=>$patient,"arrivalDate"=>new \DateTime()]);
@@ -60,8 +62,6 @@ class InscriptionController extends AbstractController
             $session->set("visitorList",serialize($one));
             return $this->redirectToRoute("app_resultat");
         }
-
-
         return $this->render('inscription/index.html.twig', [
             'controller_name' => 'InscriptionController',
             'form'=>$form,
@@ -82,14 +82,15 @@ class InscriptionController extends AbstractController
     #[Route('/list-patient', name: 'app_visitor')]
     #[IsGranted("ROLE_USER")]
     public function listVisitor(VisitorListServiceInterface $visitorListServiceInterface):Response{
-        $visitors = $visitorListServiceInterface->getVisitorListOfToday();
-        $visitors2=[];
         $user= $this->getUser();
-        foreach($visitors as $visitor){
+        $visitors = $visitorListServiceInterface->getVisitorListOfToday($user->getVisitorLists()[0]);
+        //$visitors2=[];
+        /*foreach($visitors as $visitor){
             if($visitor->getMedecin()->getId()==$user->getId()){
                 $visitors2[]=$visitor;
             }
         }
+        */
         return $this->render("inscription/liste.html.twig",[
             "visitors"=>$visitors
         ]);
@@ -109,6 +110,7 @@ class InscriptionController extends AbstractController
         return $this->json(["status"=> "success"]);
 
     }
+
     #[Route("/limit-patient-number/{id}", name:"app_limit_number")]
     public function limitPatientNumber(Medecin $medecin):Response{
 

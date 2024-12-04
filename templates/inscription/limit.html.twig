@@ -3,22 +3,24 @@
 {% block title %}Incription sur la liste de visite{% endblock %}
 
 {% block body %}
-{% include("menu/header.html.twig") %}
-<div class="m-auto col-md-6 mt-5">  
+<div class="m-auto col-md-6 mt-5 shadow">  
 <div class="example-wrapper">
   
- <div class="alert alert-danger" role="alert">
-  <h4 class="alert-heading">Desolé mais il n'y a plus de place !</h4>
+ <div class="alert tunaweza-bg-red text-white" role="alert">
+  <h4 class="alert-heading text-center">Desolé mais il n'y a plus de place <i class="bi bi-x-octagon-fill"></i></h4>
   <p>Le docteur <strong>{{medecin.prenom}} {{medecin.nom}}</strong> ne recoit plus aucun patient pour la journée.
     Car ayant atteint le nombre maximum de patient pour la journée, soit <strong>{{medecin.doctorConfiguration.limitPatientNumber}} patients par jour</strong>.
   </p>
   <hr>
-  <p class="mb-0">Cependant, ne vous en faite pas! Vous pouvez toujours vous enregistrer sur la liste dès demain entre:
-  <strong>{{medecin.doctorConfiguration.timeToStart|date("H:m:s") }}</strong> et <strong>{{medecin.doctorConfiguration.timeToEnd|date("H:m:s") }}</strong> du matin.
+  <p class="mb-0 small">Cependant, ne vous en faite pas! Vous pouvez toujours vous enregistrer sur la liste dès demain entre:
+  <strong><i class="bi bi-alarm"></i> {{medecin.doctorConfiguration.timeToStart|date("H:m") }}</strong> et <strong>{{medecin.doctorConfiguration.timeToEnd|date("H:m") }}</strong> du matin.
   </p>
+  <div><a class="btn tunaweza-bg-blue text-white" href="{{path('app_inscription')}}"><i class="bi bi-arrow-return-left"></i></a></div>
 </div>
 
    
 </div>
+
 </div>
+{% include("footer/_mini-footer.html.twig") %}
 {% endblock %}
