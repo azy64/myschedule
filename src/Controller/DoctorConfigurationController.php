@@ -62,7 +62,9 @@ final class DoctorConfigurationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_doctor_configuration_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_doctor_configuration_edit', [
+                "id"=>$this->getUser()->getDoctorConfiguration()->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('doctor_configuration/edit.html.twig', [

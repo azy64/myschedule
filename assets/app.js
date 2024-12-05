@@ -17,14 +17,19 @@ console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 const url = location.href;
 const path="/change-examined";
 const statPath="/stats-medecin";
+const refresh=()=>{
+  //console.log("refresh...");
+  window.location.reload();
+  
+}
 
 const getMedecinData =(id, blocker)=>{
     let options={};
     fetch(statPath+"/"+id,{
         method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, *cors, same-origin
+       // mode: "cors", // no-cors, *cors, same-origin
         cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
+        //credentials: "same-origin", // include, *same-origin, omit
         headers: {
         "Content-Type": "application/json",
         },
@@ -96,6 +101,30 @@ const getMedecinData =(id, blocker)=>{
         
     })
 }
+const putExaminedOnTrue =(data,btn)=>{
+  fetch(path,{
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "no-cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      //credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+      "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+  }).then(response=>response.json())
+  .then((result)=>{
+      console.log("resultat:",result);
+      if(result.status==="success"){
+          btn.title="Yes";
+          btn.classList.remove("btn-warning");
+          btn.classList.add("rounded");
+          btn.classList.add("btn-success");
+          btn.innerHTML='<i class="bi bi-hand-thumbs-up"></i>';
+      }
+      
+  })
+}
+
 
 if(url.includes("/stats")){
     
@@ -122,28 +151,7 @@ if(url.includes("/list-patient")){
             
         },false)
     })
+    setInterval(refresh,30000);
 }
-const putExaminedOnTrue =(data,btn)=>{
-    fetch(path,{
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, *cors, same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
-        headers: {
-        "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    }).then(response=>response.json())
-    .then((result)=>{
-        console.log("resultat:",result);
-        if(result.status==="success"){
-            btn.title="Yes";
-            btn.classList.remove("btn-warning");
-            btn.classList.add("rounded");
-            btn.classList.add("btn-success");
-            btn.innerHTML='<i class="bi bi-hand-thumbs-up"></i>';
-        }
-        
-    })
-}
+
 
