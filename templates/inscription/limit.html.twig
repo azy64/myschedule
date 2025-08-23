@@ -3,19 +3,38 @@
 {% block title %}Incription sur la liste de visite{% endblock %}
 
 {% block body %}
-<div class="m-auto col-md-6 mt-5 shadow">  
+<style>
+    .logo {
+    max-width: 120px;
+    margin-bottom: 5px;
+}
+</style>
+<div class="text-center">
+  <img src="{{asset('images/tunaweza-logo.png')}}" alt="Logo" class="logo">
+</div>
+<div class="m-auto col-md-6 shadow">  
+
 <div class="example-wrapper">
-  
- <div class="alert tunaweza-bg-red text-white" role="alert">
-  <h4 class="alert-heading text-center">Desolé mais il n'y a plus de place <i class="bi bi-x-octagon-fill"></i></h4>
-  <p>Le docteur <strong>{{medecin.prenom}} {{medecin.nom}}</strong> ne recoit plus aucun patient pour la journée.
+ <div class="alert tunaweza-bg-red text-white" role="alert" style="opacity:.9">
+  <h5 class="alert-heading text-center">Desolé mais il n'y a plus de place <i class="bi bi-x-octagon-fill"></i></h5>
+  <p class="small">Le docteur <strong>{{medecin.prenom}} {{medecin.nom}}</strong> ne recoit plus aucun patient pour la journée.
     Car ayant atteint le nombre maximum de patient pour la journée, soit <strong>{{medecin.doctorConfiguration.limitPatientNumber}} patients par jour</strong>.
   </p>
   <hr>
-  <p class="mb-0 small">Cependant, ne vous en faite pas! Vous pouvez toujours vous enregistrer sur la liste dès demain entre:
-  <strong><i class="bi bi-alarm"></i> {{medecin.doctorConfiguration.timeToStart|date("H:m") }}</strong> et <strong>{{medecin.doctorConfiguration.timeToEnd|date("H:m") }}</strong> du matin.
+  <p class="mb-0 small text-center text-dark">
+  
+  <div class="text-center small">
+  <h4><i class="bi bi-hourglass-split"></i></h4>
+  Cependant, ne vous en faite pas! Vous pouvez toujours vous enregistrer sur la liste dès demain entre:
+  <strong><i class="bi bi-alarm"></i> {{medecin.doctorConfiguration.timeToStart|date("H:m") }}</strong> et
+   <strong>{{medecin.doctorConfiguration.timeToEnd|date("H:m") }}</strong> du matin.
+   </div>
   </p>
-  <div><a class="btn tunaweza-bg-blue text-white" href="{{path('app_inscription')}}"><i class="bi bi-arrow-return-left"></i></a></div>
+  <div class="text-center">
+    <a class="small btn btn-primary btn-md tunaweza-bg-blue border-0 text-white" href="{{path('app_inscription')}}">
+      Page d'inscription<!--<i class="bi bi-arrow-return-left"></i>-->
+    </a>
+  </div>
 </div>
 
    

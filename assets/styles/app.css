@@ -74,7 +74,7 @@ footer{
     min-height: 80px;
     position: absolute;
     bottom: 0px;
-    width: 82%;
+    width: 82% !important;
 }
 .tunaweza-rounded{
     -webkit-border-radius: 20px !important;
@@ -99,4 +99,39 @@ footer{
 
 .lift:hover{
     overflow-y: scroll;
+}
+/*******************************************/
+.tunaweza_img_logo {
+    display: block;
+    width: 60%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+/** here we define style for mobile **/
+
+@media (max-width: 450px) {
+    .tunaweza-h-100{
+        min-height: 700px !important;
+    }
+    .tunaweza-mobile-mt-5{
+        margin-top: 10% !important;
+    }
+    .tunaweza-mobile-mb-5{
+        margin-top: 10% !important;
+    }
+    .tunaweza-text-center{
+        text-align: center !important;
+        margin:auto;
+    }
+    .tunaweza_img_logo{
+        width: 40%;
+    }
+
+    footer{
+        min-height: 80px;
+        position: absolute;
+        bottom: 0px;
+        width: 98% !important;
+    }
 }

@@ -71,7 +71,7 @@ class InscriptionController extends AbstractController
     #[Route('/resultat', name: 'app_resultat')]
     public function resultat(SessionInterface $session){
         $visitorList = unserialize($session->get('visitorList'));
-       
+        //dd($visitorList);
         return $this->render(
                 "inscription/mynumber.html.twig",[
                     "schedule"=>$visitorList,
