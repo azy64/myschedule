@@ -22,13 +22,19 @@ const refresh=()=>{
   window.location.reload();
   
 }
+const formatDataToChart=(data)=>{
+  return data.map((item)=>{
+    item.arrivalDate= item.arrivalDate.split("-")[0]
+    return item;
+  })
+}
 
 const getMedecinData =(id, blocker)=>{
     let options={};
     fetch(statPath+"/"+id,{
         method: "POST", // *GET, POST, PUT, DELETE, etc.
        // mode: "cors", // no-cors, *cors, same-origin
-        cache: "reload", // *default, no-cache, reload, force-cache, only-if-cached
+        //cache: "reload", // *default, no-cache, reload, force-cache, only-if-cached
         //credentials: "same-origin", // include, *same-origin, omit
         headers: {
         "Content-Type": "application/json",
@@ -36,6 +42,7 @@ const getMedecinData =(id, blocker)=>{
         body:"",
     }).then(response=>response.json())
     .then((result)=>{
+        result= formatDataToChart(result);
         console.log("resultat:",result);
         options = {
             container: blocker, // Container: HTML Element to hold the chart
@@ -49,22 +56,22 @@ const getMedecinData =(id, blocker)=>{
             series: [
               {
                 type: "bar",
-                xKey: "examined",
-                yKey: "arrivalDate",
-                yName: "Date d'Arrivée",
+                yKey: "examined",
+                xKey: "arrivalDate",
+                xName: "Date d'Arrivée",
               },
-              {
+              /*{
                 type: "line",
-                xKey: "examined",
-                yKey: "arrivalDate",
+                yKey: "examined",
+                xKey: "arrivalDate",
                 yName: "cas examiné",
-              },
+              },*/
             ],
             // Axes: Configure the axes for the chart
             axes: [
               // Display category (xKey) as the bottom axis
               {
-                type: "category",
+                type: "arrivalDate",
                 position: "bottom",
               },
               // Use left axis for 'iceCreamSales' series
@@ -73,17 +80,17 @@ const getMedecinData =(id, blocker)=>{
                 position: "left",
                 keys: ["arrivalDate"],
                 // Format the label applied to this axis
-                label: {
+                /*label: {
                   formatter: (params) => {
                     return parseFloat(params.value).toLocaleString();
                   },
-                },
+                },*/
               },
               // Use right axis for 'avgTemp' series
               {
                 type: "number",
                 position: "right",
-                keys: ["examined"],
+                keys: ["arrivalDate"],
                 // Format the label applied to this axis (append ' °C')
                 label: {
                   formatter: (params) => {
