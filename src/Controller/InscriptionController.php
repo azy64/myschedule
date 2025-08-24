@@ -92,7 +92,7 @@ class InscriptionController extends AbstractController
         }
         */
         return $this->render("inscription/liste.html.twig",[
-            "visitors"=>$visitors
+            "visitors"=>$visitors,"page"=>"list-patient"
         ]);
     }
 
@@ -120,7 +120,7 @@ class InscriptionController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function statistique():Response{
 
-        return $this->render("statistics/index.html.twig",["user"=> $this->getUser()]);
+        return $this->render("statistics/index.html.twig",["user"=> $this->getUser(),"page"=>"stats"]);
     }
     #[Route("/stats-medecin/{id}", name:"app_stats_medecin")]
     public function statisticData(Medecin $medecin):JsonResponse{

@@ -70,6 +70,10 @@ body {
     color: #EB1244;
 }
 
+.tunaweza-active{
+    color: #EB1244;
+}
+
 footer{
     min-height: 80px;
     position: absolute;

@@ -69,7 +69,7 @@ final class DoctorConfigurationController extends AbstractController
 
         return $this->render('doctor_configuration/edit.html.twig', [
             'doctor_configuration' => $doctorConfiguration,
-            'form' => $form,
+            'form' => $form,"page"=>"config"
         ]);
     }
 
