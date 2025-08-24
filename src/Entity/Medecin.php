@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\MedecinRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Monolog\DateTimeImmutable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -59,9 +61,13 @@ class Medecin implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
+    #[ORM\OneToOne(mappedBy: 'medecin', cascade: ['persist', 'remove'])]
+    private ?DoctorConfiguration $doctorConfiguration = null;
+
     public function __construct()
     {
         $this->visitorLists = new ArrayCollection();
+        $this->createdAt= new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -237,6 +243,23 @@ class Medecin implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getDoctorConfiguration(): ?DoctorConfiguration
+    {
+        return $this->doctorConfiguration;
+    }
+
+    public function setDoctorConfiguration(DoctorConfiguration $doctorConfiguration): static
+    {
+        // set the owning side of the relation if necessary
+        if ($doctorConfiguration->getMedecin() !== $this) {
+            $doctorConfiguration->setMedecin($this);
+        }
+
+        $this->doctorConfiguration = $doctorConfiguration;
 
         return $this;
     }

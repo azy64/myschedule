@@ -3,17 +3,52 @@
 {% block title %}Incription sur la liste de visite{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container mt-5 shadow rounded m-auto">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="col-sm-11 border-end m-auto mt-5 text-center">
+                <div>
+                     <img src="{{asset('images/wait.jpg')}}" width="420" alt="attente" title="Wait" />
+                </div>
+               
+               <!-- <div class="mt-2">
+                    <h3 class="tunaweza-text-red fw-medium">Êtes-vous medecin ?</h3>
+                    <div class="text-center">
+                        <a href="{{path('app_login')}}" class="btn btn-lg tunaweza-bg-red text-white hand-over1">
+                        clicker ici pour vous connecter
+                        </a> 
+                    </div>
+                    <strong class="tunaweza-text-blue">ou</strong>
+                    <div class="text-center">
+                        <a href="{{path('app_register')}}" class="btn btn-lg tunaweza-bg-blue text-white hand-over1-blue">
+                        ici pour vous creer un compte
+                        </a>
+                    </div>
+                </div>  -->
+                <div>
+                    <p class="text-center small shadow tunaweza-text-blue p-4 fst-italic">Vous êtes au bon endroit pour vous inscrire à la salle d'attente
+                        Veuillez remplire vos informations, choisir votre medecin et il vous 
+                        contactera via votre numero d'inscription
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6" >
+            <div class="example-wrapper col-md-9 m-auto tunaweza-text-blue">
+                
+            <h1 class="display-6 mt-2 text-center">Veuillez vous inscrire sur la liste d'attente</h1>
 
-<div class="example-wrapper">
-    
- <h1>Veuillez vous inscrire sur la liste de visite</h1>
-
-    {{ form(form) }}
-
-    <button class="btn btn-lg btn-primary"  type="submit" class="btn">Inscription sur la liste</button>        
+            
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate','action':path('app_inscription')}}) }}
+                    {{ form_widget(form) }}
+                    <div class="text-center m-3">
+                    <button class="btn btn-lg tunaweza-bg-red text-white hand-over1"  
+                    type="submit" class="btn">Inscription</button>
+                    </div>
+                {{ form_end(form) }}      
+            </div>
+        </div>
+    </div>
 </div>
+{% include("footer/_mini-footer.html.twig") %}
 {% endblock %}

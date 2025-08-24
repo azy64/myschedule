@@ -8,7 +8,9 @@ use App\Repository\MedecinRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -26,20 +28,70 @@ class PatientType extends AbstractType
         $atb_choice=[];
         $medecins= $this->medecinRepository->findAll();
         foreach($medecins as $medecin){
-            $atb_choice[$medecin->getId()]=$medecin->getNom().' '.$medecin->getPrenom();
+            $atb_choice[$medecin->getNom().' '.$medecin->getPrenom()]=$medecin->getId();
         }
         return $atb_choice;
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
-            ->add("socialSecurityNumber")
-            ->add("Medecin", ChoiceType::class,[
+            ->add('nom', TextType::class,[
+                "label"=>"Nom",
+                "attr"=>["class"=>"form-control m-2"],
+                "label_attr"=>["class"=>"ms-3"],
+                "row_attr"=>["class"=>"small"],
+                "constraints"=>[
+                    new NotBlank([
+                        'message' => 'Veuillez saisir votre nom',
+                    ]),
+                ]
+            ])
+            ->add('prenom',TextType::class,[
+                "label"=> "Prenom",
+                "label_attr"=>["class"=>"ms-3"],
+                "attr"=>["class"=>"form-control m-2"],
+                "row_attr"=>["class"=>"small"],
+                "constraints"=>[
+                    new NotBlank([
+                        'message' => 'Veuillez saisir votre prenom',
+                    ]),
+                ]
+            ])
+            ->add('email', EmailType::class,[
+                "label"=>"Email",
+                "attr"=>["class"=>"form-control m-2"],
+                "label_attr"=>["class"=>"ms-3"],
+                "row_attr"=>["class"=>"small"],
+                "constraints"=>[
+                    new NotBlank([
+                        'message' => 'Veuillez saisir votre adresse email',
+                    ]),
+                ]
+            ])
+            ->add("socialSecurityNumber",TextType::class,[
+                "label"=>"Numero de sécurité sociale",
+                "label_attr"=>["class"=>"ms-3"],
+                "attr"=>["class"=>"form-control m-2"],
+                "row_attr"=>["class"=>"small"],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir votre numero de securité sociale',
+                    ]),
+                    new Length([
+                        'min' => 15,
+                        'minMessage' => 'Le numero de securité sociale comporte 15 chiffres',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 15,
+                    ]),
+                ],
+            ])
+            ->add("medecin", ChoiceType::class,[
                 "mapped"=>false,
                 "label"=>"Choisir un medecin",
-                "choice_attr"=>$this->getMedecin(),
+                "label_attr"=>["class"=>"ms-3"],
+                "choices"=>$this->getMedecin(),
+                "attr"=>["class"=>"form-control m-2"],
+                "row_attr"=>["class"=>"small text-start tunaweza-text-blue"],
             ])
            /* ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

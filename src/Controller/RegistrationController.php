@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Medecin;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
+use App\Service\DoctorConfigurationServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +20,10 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
-    public function __construct(private EmailVerifier $emailVerifier)
+    public function __construct(
+        private EmailVerifier $emailVerifier, 
+        private DoctorConfigurationServiceInterface $doctorConfigurationService
+        )
     {
     }
 
@@ -38,6 +42,7 @@ class RegistrationController extends AbstractController
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
             $entityManager->persist($user);
+            $this->doctorConfigurationService->saveDoctorConfigurationByDefaut($user);
             $entityManager->flush();
 
             // generate a signed url and email it to the user

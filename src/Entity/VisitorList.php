@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\VisitorListRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VisitorListRepository::class)]
 class VisitorList
@@ -12,6 +13,7 @@ class VisitorList
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["visitorList:read"])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'visitorLists')]
@@ -20,15 +22,19 @@ class VisitorList
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    
     private ?Patient $patient = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["visitorList:read"])]
     private ?bool $examined = null;
 
     #[ORM\Column]
+    #[Groups(["visitorList:read"])]
     private ?int $arrivalPosition = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(["visitorList:read"])]
     private ?\DateTimeInterface $arrivalDate = null;
 
     public function getId(): ?int

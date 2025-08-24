@@ -1,0 +1,78 @@
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="{{path('app_inscription')}}">
+  <img id="logo" src="{{asset('images/tunaweza-logo.png')}}" alt="tunaweza-logo" title="Tunaweza" width="80"/>
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{path('app_inscription')}}">Liste d'inscription <!--<span class="sr-only">(current)</span>--></a>
+   <!--   </li>
+      {% if is_granted("ROLE_USER") %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('app_visitor')}}">Liste Patients</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('app_stats')}}">Statistiques</a>
+      </li>
+     {% endif %}
+    </ul>
+    {% if is_granted("ROLE_USER") %}
+    <div class="form-inline my-2 my-lg-0">
+      <a href="{{path('app_logout')}}"class="btn btn-outline-success my-2 my-sm-0" type="submit">Deconnexion</a>
+    </div>
+    {% endif %}
+  </div>
+</nav>
+-->
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-lg-2 tunaweza-bg-blue tunaweza-h-100 shadow">
+        <div class="col-md-12 m-auto text-start tunaweza-text-center">
+          <img id="logo" src="{{asset('images/tunaweza-logo.jpg')}}" 
+          alt="tunaweza-logo" title="Tunaweza" class="tunaweza_img_logo"/>
+        </div>
+        <div class="">
+          <div class="m-auto mt-5" id="navbarTogglerDemo03">
+            <ul class="navbar-nav text-white small">
+            <!--  <li class="nav-item active">
+                <a class="nav-link" href="{{path('app_inscription')}}">Liste d'inscription </a>
+              </li>
+              -->
+              {% if is_granted("ROLE_USER") %}
+              <li class="nav-item">
+                <a class="nav-link text-over" href="{{path('app_visitor')}}">
+                  <i class="bi bi-list-task"></i>
+                  Liste d'attente
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-over" href="{{path('app_stats')}}">
+                  <i class="bi bi-bar-chart-line-fill"></i>
+                  Statistiques
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-over" href="{{path('app_doctor_configuration_edit',{'id': app.user.doctorConfiguration.id})}}">
+                  <i class="bi bi-person-fill-gear"></i>
+                  Configuration
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{path('app_logout')}}"class="nav-link text-over" type="submit">
+                  <i class="bi bi-box-arrow-left"></i>
+                  Deconnexion
+                </a>
+              </li>
+            {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>  
+      <div class="col-lg-9 tunaweza-h-100">
+     <!-- </div> 
+  </div>
+</div>-->
