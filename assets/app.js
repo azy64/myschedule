@@ -29,6 +29,13 @@ const formatDataToChart=(data)=>{
   })
 }
 
+const formatDataTransform=(data)=>{
+  return data.map((item)=>{
+    item.arrivalDate= item.arrivalDate.split("T")[0]
+    return item;
+  })
+}
+
 const getMedecinData =(id, blocker)=>{
     let options={};
     fetch(statPath+"/"+id,{
@@ -42,21 +49,21 @@ const getMedecinData =(id, blocker)=>{
         body:"",
     }).then(response=>response.json())
     .then((result)=>{
-        result= formatDataToChart(result);
+        result= formatDataTransform(result);
         console.log("resultat:",result);
         options = {
             container: blocker, // Container: HTML Element to hold the chart
             // Chart Title
             title: { text: "stats sur le visite" },
             // Chart Subtitle
-            subtitle: { text: "Data from 2024" },
+            subtitle: { text: "Data from "+(new Date().getFullYear()) },
             
             data: result,
             // Series: Defines which chart type and data to use
             series: [
               {
                 type: "bar",
-                yKey: "examined",
+                yKey: "id",
                 xKey: "arrivalDate",
                 xName: "Date d'Arrivée",
               },
@@ -71,14 +78,16 @@ const getMedecinData =(id, blocker)=>{
             axes: [
               // Display category (xKey) as the bottom axis
               {
-                type: "arrivalDate",
+                type: "date",
                 position: "bottom",
+                keys:["arrivalDate"],
+                label:"Années"
               },
               // Use left axis for 'iceCreamSales' series
               {
                 type: "number",
                 position: "left",
-                keys: ["arrivalDate"],
+                keys: ["examined"],
                 // Format the label applied to this axis
                 /*label: {
                   formatter: (params) => {
