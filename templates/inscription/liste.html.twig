@@ -10,49 +10,50 @@
 {% include("menu/header.html.twig") %}
         <div class="example-wrapper">
             
-        <h4 class="display-6 mb-3 mt-5">Patients sur la liste d'attente</h4>
-        <hr>
-        <div class="table-responsive-sm">
-        <table class="table table-striped small table-hover shadow table-sm tunaweza-rounded tunaweza-table" >
-            <thead class="tunaweza-bg-blue text-center rounded" >
-                <th>#</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Email</th>
-                <th>N° de securité sociale</th>
-                <th>Date</th>
-                <th>Examiné ?</th>
-            </thead>
-            <tbody class="text-center tunaweza-text-blue">
-            {% set t = 1 %}
-            {% set lastVisitorId=0 %}
-            {% for visitor in visitors %}
-            {% set t=t+1 %}
-             {% set lastVisitorId= visitor.id %}
-            <tr>
-            <td>{{visitor.arrivalPosition}}</td>
-            <td>{{visitor.patient.nom}}</td>
-            <td>{{visitor.patient.prenom}}</td>
-            <td>{{visitor.patient.email}}</td>
-            <td>{{visitor.patient.socialSecurityNumber}}</td>
-            <td>{{visitor.arrivalDate|date("d-m-Y H:m:s")}}</td>
-            <td>
-            {% if visitor.examined %} 
-                <button id="visitor{{t}}-{{visitor.id}}" title="yes" class="rounded btn btn-small btn-success">
-                   <i class="bi bi-hand-thumbs-up"></i>
-                </button>
-                {% else %}
-                <button id="visitor{{t}}-{{visitor.id}}" title="not yet" class=" rounded btn btn-small btn-warning">
-                   <i class="bi bi-hand-thumbs-down"></i>
-                </button>
-            {% endif %}
-            </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <input type="hidden" value="{{lastVisitorId}}" id="lastVisitorId"/>
-        </div> 
+            <h4 class="display-6 mb-3 mt-5">Patients sur la liste d'attente</h4>
+            <hr>
+            <div class="table-responsive-sm" style="border:2px solid transparent;height:370px;overflow-y:auto;">
+                <table class="table table-striped small table-hover shadow table-sm tunaweza-rounded tunaweza-table" >
+                    <thead class="tunaweza-bg-blue text-center rounded" >
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Email</th>
+                        <th>N° de securité sociale</th>
+                        <th>Date</th>
+                        <th>Examiné ?</th>
+                    </thead>
+                    <tbody class="text-center tunaweza-text-blue" id="visitorTableBody">
+                    {% set t = 1 %}
+                    {% set lastVisitorId=0 %}
+                    {% for visitor in visitors %}
+                    {% set t=t+1 %}
+                    {% set lastVisitorId= visitor.id %}
+                    <tr>
+                    <td>{{visitor.arrivalPosition}}</td>
+                    <td>{{visitor.patient.nom}}</td>
+                    <td>{{visitor.patient.prenom}}</td>
+                    <td>{{visitor.patient.email}}</td>
+                    <td>{{visitor.patient.socialSecurityNumber}}</td>
+                    <td>{{visitor.arrivalDate|date("d-m-Y H:m:s")}}</td>
+                    <td>
+                    {% if visitor.examined %}
+                        <button id="visitor{{t}}-{{visitor.id}}" title="yes" class="rounded btn btn-small btn-success">
+                        <i class="bi bi-hand-thumbs-up"></i>
+                        </button>
+                        {% else %}
+                        <button id="visitor{{t}}-{{visitor.id}}" title="not yet" class=" rounded btn btn-small btn-warning">
+                        <i class="bi bi-hand-thumbs-down"></i>
+                        </button>
+                    {% endif %}
+                    </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <input type="hidden" value="{{lastVisitorId}}" id="lastVisitorId"/>
+                <input type="hidden" value="{{medecin_id}}" id="medecinId"/>
+            </div>
         </div>
         {% include('footer/footer.html.twig') %}
     </div> 

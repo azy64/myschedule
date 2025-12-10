@@ -88,17 +88,10 @@ class InscriptionController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function listVisitor(VisitorListServiceInterface $visitorListServiceInterface):Response{
         $user= $this->getUser();
-        $visitors = $user->getVisitorLists()[0]?$visitorListServiceInterface->getVisitorListOfToday($user->getVisitorLists()[0]):[];
-       //$visitors= $visitors!==null ? $visitors : [];
-        //$visitors2=[];
-        /*foreach($visitors as $visitor){
-            if($visitor->getMedecin()->getId()==$user->getId()){
-                $visitors2[]=$visitor;
-            }
-        }
-        */
+        $medecin = $user instanceof Medecin ? $user : null;
+        $visitors = $medecin && $medecin->getVisitorLists()[0]?$visitorListServiceInterface->getVisitorListOfToday($medecin->getVisitorLists()[0]):[];
         return $this->render("inscription/liste.html.twig",[
-            "visitors"=>$visitors,"page"=>"list-patient"
+            "visitors"=>$visitors,"page"=>"list-patient","medecin_id"=>$medecin->getId()
         ]);
     }
 
@@ -132,6 +125,14 @@ class InscriptionController extends AbstractController
     public function statisticData(Medecin $medecin):JsonResponse{
 
         return $this->json($medecin->getVisitorLists(),200,[],[
+            "groups"=>["patient:read","visitorList:read"]
+        ]);
+    }
+
+     #[Route('/api/v1/medecin/{id}/patients', name: 'app_medecin_patients', methods: ['GET'])]
+    public function patients(Medecin $medecin, VisitorListServiceInterface $visitorListServiceInterface):Response{
+        $visitors = $medecin && $medecin->getVisitorLists()[0]?$visitorListServiceInterface->getVisitorListOfToday($medecin->getVisitorLists()[0]):[];
+        return $this->json($visitors,200,[],[
             "groups"=>["patient:read","visitorList:read"]
         ]);
     }

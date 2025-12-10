@@ -36,6 +36,7 @@ class Patient
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["patient:read"])]
     private ?string $email = null;
 
     public function __construct() {

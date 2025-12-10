@@ -22,6 +22,7 @@ class VisitorList
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["visitorList:read"])]
     
     private ?Patient $patient = null;
 

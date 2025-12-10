@@ -10,16 +10,22 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class VisitorListService implements VisitorListServiceInterface
 {
+    private EntityManagerInterface $manager;
+    private VisitorListRepository $visitorListRepository;
+
     public function __construct(
-        private EntityManagerInterface $manager, 
-        private VisitorListRepository $visitorListRepository
-        ) {
+        EntityManagerInterface $manager,
+        VisitorListRepository $visitorListRepository
+    ) {
+        $this->manager = $manager;
+        $this->visitorListRepository = $visitorListRepository;
     }
-    public function save(array $data): VisitorList   {
+    public function save(array $data): VisitorList
+    {
         $visitorList = new VisitorList();
         $visitorList->setMedecin($data["medecin"]);
-        $visitorList->setPatient ($data["patient"]);
-        $arrivalPosition = count($this->getVisitorListOfToday($visitorList))+1;       
+        $visitorList->setPatient($data["patient"]);
+        $arrivalPosition = count($this->getVisitorListOfToday($visitorList)) + 1;
         $visitorList->setArrivalDate($data["arrivalDate"]);
         $visitorList->setExamined(false);
         $visitorList->setArrivalPosition($arrivalPosition);
@@ -28,17 +34,18 @@ class VisitorListService implements VisitorListServiceInterface
         return $visitorList;
     }
 
-    public function getVisitorListOfToday(VisitorList $visitorList): array{
+    public function getVisitorListOfToday(VisitorList $visitorList): array
+    {
         $today = new \DateTime();
-        $visitors =[];
-        $visitorLists = $this->visitorListRepository->findBy(["medecin"=>$visitorList->getMedecin()]);
-        if($visitorLists!==null){
-            foreach($visitorLists as $visitorList){
-                if(
+        $visitors = [];
+        $visitorLists = $this->visitorListRepository->findBy(["medecin" => $visitorList->getMedecin()]);
+        if ($visitorLists !== null) {
+            foreach ($visitorLists as $visitorList) {
+                if (
                     $visitorList->getArrivalDate()->format("Y-m-d") === $today->format("Y-m-d")
                     &&
-                    $visitorList->isExamined()===false
-                ){
+                    $visitorList->isExamined() === false
+                ) {
                     $visitors[] = $visitorList;
                 }
             }
@@ -46,7 +53,8 @@ class VisitorListService implements VisitorListServiceInterface
         return $visitors;
     }
 
-    public function getAllVisitorListByMedecin(Medecin $medecin): array|null{
-        return $this->visitorListRepository->findBy(["medecin"=>$medecin]);
+    public function getAllVisitorListByMedecin(Medecin $medecin): array|null
+    {
+        return $this->visitorListRepository->findBy(["medecin" => $medecin]);
     }
 }
