@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Medecin;
 use App\Entity\Patient;
 use App\Entity\VisitorList;
+use App\Event\ConfirmEvent;
 use App\Form\PatientType;
 use App\Repository\VisitorListRepository;
 use App\Security\Voter\MedecinVoter;
@@ -22,8 +23,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class InscriptionController extends AbstractController
 {
@@ -69,8 +72,10 @@ class InscriptionController extends AbstractController
     }
 
     #[Route('/resultat', name: 'app_resultat')]
-    public function resultat(SessionInterface $session){
+    public function resultat(SessionInterface $session, EventDispatcherInterface $eventDispatcherInterface,
+     MailerInterface $mailerInterface): Response{
         $visitorList = unserialize($session->get('visitorList'));
+        $eventDispatcherInterface->dispatch(new ConfirmEvent($visitorList, $mailerInterface));
         //dd($visitorList);
         return $this->render(
                 "inscription/mynumber.html.twig",[
@@ -83,7 +88,8 @@ class InscriptionController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function listVisitor(VisitorListServiceInterface $visitorListServiceInterface):Response{
         $user= $this->getUser();
-        $visitors = $visitorListServiceInterface->getVisitorListOfToday($user->getVisitorLists()[0]);
+        $visitors = $user->getVisitorLists()[0]?$visitorListServiceInterface->getVisitorListOfToday($user->getVisitorLists()[0]):[];
+       //$visitors= $visitors!==null ? $visitors : [];
         //$visitors2=[];
         /*foreach($visitors as $visitor){
             if($visitor->getMedecin()->getId()==$user->getId()){

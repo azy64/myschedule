@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/dbal": "^3",
@@ -26,6 +26,7 @@
         "symfony/http-client": "7.1.*",
         "symfony/intl": "7.1.*",
         "symfony/mailer": "7.1.*",
+        "symfony/mailer-send-mailer": "7.1.*",
         "symfony/mime": "7.1.*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/notifier": "7.1.*",
@@ -45,7 +46,8 @@
         "symfony/yaml": "7.1.*",
         "symfonycasts/verify-email-bundle": "^1.17",
         "twbs/bootstrap": "4.0.0",
-        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/cssinliner-extra": "^3.22",
+        "twig/extra-bundle": "^3.22",
         "twig/twig": "^2.12|^3.0"
     },
     "config": {
