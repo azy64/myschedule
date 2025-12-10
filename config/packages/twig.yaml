@@ -3,6 +3,7 @@ twig:
     paths:
         '%kernel.project_dir%/public/images': images
         '%kernel.project_dir%/assets/styles': styles
+        '%kernel.project_dir%/assets/vendor/bootstrap/dist/css': vendorstyles
 
 when@test:
     twig:

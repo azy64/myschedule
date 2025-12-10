@@ -5,7 +5,7 @@
 {% block title %}Numero sur la liste{% endblock %}
 
 {% block body %}
-{% apply inline_css(source("@styles/app.css")) %}
+{% apply inline_css(source("@vendorstyles/bootstrap.min.css"),source("@styles/app.css")) %}
 <style>
     .logo {
     max-width: 140px;
@@ -18,15 +18,18 @@
 <div class="row-fluid">
     <div class="col-md-9 text-center m-auto">
         
-        <h1 class="display-3 m-2 mt-2 tunaweza-text-blue">Bravo vous êtes sur la liste 🎉 ! </h1>
-        <h3 class="display-5 m-5 tunaweza-text-blue"> 
+        <h1 class="display-5 m-2 mt-2 tunaweza-text-blue">Bravo vous êtes sur la liste 🎉 ! </h1>
+        <h3 class="display-6 m-5 tunaweza-text-blue">
             {{schedule.patient.nom}} {{schedule.patient.prenom}}, vous êtes 
-            <strong class="text-white rounded-circle p-4 tunaweza-bg-red ">N°{{schedule.arrivalPosition}}</strong>
+            <br/>
+            <br/>
+            <strong class="text-white rounded-circle p-4 tunaweza-bg-red" style="color:white;">
+                N°{{schedule.arrivalPosition}}
+            </strong>
         </h3>
         <strong class="tunaweza-text-red mark small">
         <i>Veuillez patienter dans la salle d'attente, le docteur vous appellera!</i>
         </strong>
-        <button id="printer" class="btn btn-warning btn -small" title="imprimer"><i class="bi bi-printer"></i></button>
         <!--<hr>
         <div>-->
             <!--<img src="{{asset('images/tunaweza-logo.png')}}" alt="logo" title="Tunaweza logo" width="150"/>-->
